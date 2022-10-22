@@ -54,6 +54,20 @@ const SearchBooks = () => {
 
   // create function to handle saving a book to our database
   const handleSaveBook = async (bookId) => {
+    try {
+      const res = await saveBook({ id, techNum });
+
+      if (!res.ok) {
+        throw new Error('Could not Save');
+      }
+
+      const matchup = await res.json();
+      console.log(matchup);
+      setMatchUp(matchup);
+    } catch (err) {
+      console.log(err);
+    }
+  };
     // find the book in `searchedBooks` state by the matching id
     const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
@@ -140,6 +154,5 @@ const SearchBooks = () => {
       </Container>
     </>
   );
-};
 
 export default SearchBooks;
